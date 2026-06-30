@@ -1,0 +1,17 @@
+# Render blueprint for the FastAPI backend.
+# Deploy: New > Blueprint > point at this repo. Render reads this file.
+services:
+  - type: web
+    name: mini-task-tracker-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      # Set this to your deployed frontend origin (no trailing slash).
+      - key: CORS_ORIGINS
+        sync: false
+      # Optional: set to a Postgres URL for durable storage. If unset, the API
+      # uses the in-memory repository (data resets on restart).
+      - key: DATABASE_URL
+        sync: false

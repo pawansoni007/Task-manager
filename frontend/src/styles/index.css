@@ -1,0 +1,393 @@
+:root {
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --border: #e2e6ef;
+  --text: #1f2430;
+  --muted: #6b7280;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --danger: #dc2626;
+  --done: #16a34a;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(20, 25, 40, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.app__header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.app__title {
+  margin: 0;
+  font-size: 1.9rem;
+}
+
+.app__subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+.app__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1.25rem 0 0.75rem;
+}
+
+.app__error {
+  background: #fef2f2;
+  color: var(--danger);
+  border: 1px solid #fecaca;
+  border-radius: var(--radius);
+  padding: 0.6rem 0.9rem;
+  margin: 0.5rem 0;
+}
+
+/* ---- Form ---- */
+.task-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.task-form__row {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.task-form__title,
+.task-form__description,
+.search__input,
+.card__edit-title,
+.card__edit-description,
+select,
+input[type='date'] {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #fff;
+}
+
+.task-form__title:focus,
+.task-form__description:focus,
+.search__input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.has-error {
+  border-color: var(--danger);
+}
+
+.task-form__meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.task-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.task-form__error,
+.card__error {
+  color: var(--danger);
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn:hover {
+  background: #f3f4f6;
+}
+
+.btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn--primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn--danger {
+  color: var(--danger);
+  border-color: #fca5a5;
+}
+
+.btn--danger:hover {
+  background: #fef2f2;
+}
+
+/* ---- Search & filters ---- */
+.search {
+  flex: 1 1 220px;
+}
+
+.filters {
+  display: inline-flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.filters__btn {
+  border: none;
+  background: transparent;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.filters__btn.is-active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ---- Stats ---- */
+.stats {
+  display: flex;
+  gap: 1.25rem;
+  padding: 0.5rem 0.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.stats__item--open strong {
+  color: var(--primary);
+}
+
+.stats__item--done strong {
+  color: var(--done);
+}
+
+/* ---- List & cards ---- */
+.list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.list__status {
+  color: var(--muted);
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.card--completed {
+  background: #f8fafc;
+  border-color: #d9f0e1;
+}
+
+.card--completed .card__title {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.card--editing {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.card__main {
+  display: flex;
+  gap: 0.7rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.card__check input {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.2rem;
+  cursor: pointer;
+}
+
+.card__body {
+  min-width: 0;
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 1.05rem;
+  word-break: break-word;
+}
+
+.card__description {
+  margin: 0.25rem 0 0.4rem;
+  color: #374151;
+  word-break: break-word;
+}
+
+.card__meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.card__actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.status {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.status--open {
+  color: var(--primary);
+}
+
+.status--completed {
+  color: var(--done);
+}
+
+.badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.badge--low {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.badge--medium {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.badge--high {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* ---- Empty state ---- */
+.empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  margin-top: 0.5rem;
+}
+
+.empty__message {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.empty__hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 540px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .card__actions {
+    justify-content: flex-end;
+  }
+
+  .app__controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters {
+    justify-content: space-between;
+  }
+
+  .filters__btn {
+    flex: 1;
+  }
+}
