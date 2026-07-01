@@ -4,7 +4,8 @@ A small, usable task tracker: create tasks, view them, mark them complete, filte
 and search by title. Built as a clean full-stack example with a React frontend and a FastAPI
 backend.
 
-> **Live demo:** _add your deployed URL here after deploying (see [Deployment](#deployment))._
+> **Live demo:** Frontend: https://task-manager-vb7e.onrender.com  
+> **API:** https://task-manager-api-gp23.onrender.com/api/health
 
 ![App screenshot](docs/screenshot.png)
 
@@ -27,7 +28,7 @@ backend.
 | Backend  | Python 3.11, FastAPI, Pydantic v2 |
 | Storage  | Repository pattern — in-memory by default, SQL (SQLAlchemy) when `DATABASE_URL` is set |
 | Tests    | pytest (service + API via TestClient) |
-| Deploy   | Frontend → Vercel, Backend → Render |
+| Deploy   | Frontend → Render, Backend → Render |
 
 ## Architecture
 
@@ -44,9 +45,6 @@ request → router → service → repository (interface) → in-memory | SQL im
   in-memory or SQL implementation based on configuration, so swapping storage is a one-line change.
 - **Domain model** (`app/domain/models.py`) is storage-agnostic; **schemas** (`app/schemas/`) define
   the camelCase HTTP contract.
-
-The frontend mirrors this separation: a typed API client (`src/api/`), a single `useTasks` hook that
-owns all data/state, and small presentational components.
 
 ### API
 
@@ -109,14 +107,16 @@ The two apps deploy independently.
 1. New → Blueprint, point at this repo (it reads `backend/render.yaml`), or create a Web Service with
    root directory `backend`, build `pip install -r requirements.txt`, start
    `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
-2. Set `CORS_ORIGINS` to your Vercel frontend URL (no trailing slash).
+2. Set `CORS_ORIGINS` to your frontend URL (no trailing slash). Example: `https://task-manager-vb7e.onrender.com`.
 3. *(Optional, for durable data)* add a Render Postgres instance and set `DATABASE_URL` to its
    connection string (use the `postgresql+psycopg://…` form). Without it, the API runs in-memory.
 
-**Frontend → Vercel**
-1. Import the repo, set the project root to `frontend` (Vite is auto-detected).
-2. Set `VITE_API_BASE_URL` to your Render backend URL.
-3. Deploy, then update `CORS_ORIGINS` on Render with the resulting Vercel URL.
+**Frontend → Render**
+1. New → Static Site, point at this repo and set the project root to `frontend`.
+2. Build Command: `npm ci && npm run build`
+3. Publish Directory: `dist`
+4. Set `VITE_API_BASE_URL` to your Render backend URL: `https://task-manager-api-gp23.onrender.com`
+5. Deploy, then update `CORS_ORIGINS` on the backend Render service with the resulting frontend URL if different.
 
 ## Known limitations
 
