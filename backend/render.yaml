@@ -1,17 +1,20 @@
-# Render blueprint for the FastAPI backend.
+# Render blueprint for the FastAPI backend using the repository Dockerfile.
 # Deploy: New > Blueprint > point at this repo. Render reads this file.
+#
+# NOTE: This service uses `runtime: docker` so Render will build the Dockerfile
+# located at `backend/Dockerfile`. The Dockerfile installs the Rust toolchain and
+# maturin so pydantic-core (and other Rust-backed wheels) can be built during the
+# image build. This avoids the "read-only cargo cache" error when Render's
+# Python runtime executes `pip install` directly.
 services:
   - type: web
     name: mini-task-tracker-api
-    runtime: python
+    runtime: docker
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    # When using Docker, Render will use the Dockerfile's CMD as the start command.
+    # Keep environment variables below for Render's UI to sync.
     envVars:
-      # Set this to your deployed frontend origin (no trailing slash).
       - key: CORS_ORIGINS
         sync: false
-      # Optional: set to a Postgres URL for durable storage. If unset, the API
-      # uses the in-memory repository (data resets on restart).
       - key: DATABASE_URL
         sync: false
